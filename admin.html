@@ -8,7 +8,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #0a0a0a;
+      background: #BE0155;
       color: #fff;
       font-family: Arial, sans-serif;
       display: flex;
@@ -19,16 +19,16 @@
       padding: 20px;
       gap: 15px;
     }
-    h1 { color: #c8960c; font-size: 24px; font-weight: 400; }
+    h1 { color: #F2A6C6; font-size: 24px; font-weight: 400; }
     canvas { display: none; }
     #preview {
       max-width: 95vw;
       max-height: 70vh;
-      border: 1px solid #c8960c;
+      border: 1px solid #F2A6C6;
       border-radius: 10px;
     }
     #btn-descargar {
-      background: linear-gradient(135deg, #c8960c, #f5d060, #b8860b);
+      background: linear-gradient(135deg, #F2A6C6, #E8649B, #DE2170);
       color: #000;
       font-weight: bold;
       font-size: 18px;
@@ -44,7 +44,7 @@
 
   <h1>KP Admin</h1>
   <img id="preview" alt="Vista previa">
-  <a id="btn-descargar" download="pago_kp.jpg">⬇️ Descargar Recordatorio</a>
+  <a id="btn-descargar" download="pago_dmar.jpg">⬇️ Descargar Recordatorio</a>
   <canvas id="canvas"></canvas>
 
   <script>
@@ -90,9 +90,9 @@
       llave.crossOrigin = "anonymous";
 
       // Tus archivos exactos de GitHub
-      fondo.src = "https://kaleth77.github.io/kpreloj/img/recordatorio.JPEG";
-      qr.src = "https://kaleth77.github.io/kpreloj/img/qr.jpg";
-      llave.src = "https://kaleth77.github.io/kpreloj/img/llave.jpg";
+      fondo.src = "https://kaleth77.github.io/dmar/img/recordatorio.JPEG";
+      qr.src = "https://kaleth77.github.io/dmar/img/qr.jpg";
+      llave.src = "https://kaleth77.github.io/dmar/img/llave.jpg";
 
       fondo.onload = () => {
         qr.onload = () => {

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KP Admin - Recordatorio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      gap: 15px;
+    }
+    h1 { color: #c8960c; font-size: 24px; font-weight: 400; }
+    canvas { display: none; }
+    #preview {
+      max-width: 95vw;
+      max-height: 70vh;
+      border: 1px solid #c8960c;
+      border-radius: 10px;
+    }
+    #btn-descargar {
+      background: linear-gradient(135deg, #c8960c, #f5d060, #b8860b);
+      color: #000;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 14px 35px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>KP Admin</h1>
+  <img id="preview" alt="Vista previa">
+  <a id="btn-descargar" download="pago_kp.jpg">⬇️ Descargar Recordatorio</a>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    function obtenerFechaFinMes() {
+      const hoy = new Date();
+      const ultimoDia = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0).getDate();
+      const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+      return `${ultimoDia} De ${meses[hoy.getMonth()]}`;
+    }
+
+    function drawValue(ctx, text, x, y, size) {
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#ffffff";
+      const chars = text.split('');
+      const widths = chars.map(ch => {
+        const isNum = /[0-9$.,]/.test(ch);
+        ctx.font = `400 ${size}px ${isNum ? 'Arial' : "'Playfair Display', serif"}`;
+        return ctx.measureText(ch).width;
+      });
+      let totalWidth = widths.reduce((a, b) => a + b, 0);
+      let curX = x - totalWidth / 2;
+      chars.forEach((ch, i) => {
+        const isNum = /[0-9$.,]/.test(ch);
+        ctx.font = `400 ${size}px ${isNum ? 'Arial' : "'Playfair Display', serif"}`;
+        ctx.fillText(ch, curX + widths[i] / 2, y);
+        curX += widths[i];
+      });
+      ctx.restore();
+    }
+
+    const total = localStorage.getItem("kp_ultimo_total") || "0";
+    const precioTexto = "$" + parseInt(total).toLocaleString('es-CO');
+    const fechaTexto = obtenerFechaFinMes();
+
+    document.fonts.ready.then(function () {
+      const fondo = new Image();
+      const qr = new Image();
+      const llave = new Image();
+      
+      fondo.crossOrigin = "anonymous";
+      qr.crossOrigin = "anonymous";
+      llave.crossOrigin = "anonymous";
+
+      // Tus archivos exactos de GitHub
+      fondo.src = "https://kaleth77.github.io/kpreloj/img/recordatorio.JPEG";
+      qr.src = "https://kaleth77.github.io/kpreloj/img/qr.jpg";
+      llave.src = "https://kaleth77.github.io/kpreloj/img/llave.jpg";
+
+      fondo.onload = () => {
+        qr.onload = () => {
+          llave.onload = () => {
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = fondo.width;
+            canvas.height = fondo.height;
+
+            // 1. Dibujar el fondo (ya trae los títulos)
+            ctx.drawImage(fondo, 0, 0);
+
+            // 2. Dibujar el Valor (ajustado en el hueco superior)
+            drawValue(ctx, precioTexto, canvas.width/2, 290, 105);
+
+         
+            // 3. Dibujar QR (Súper centrado y más arriba)
+            const qrW = 740;
+            const qrH = (qr.height * qrW) / qr.width;
+            const qrY = 330; // Posición más arriba
+            ctx.drawImage(qr, (canvas.width - qrW)/2, qrY, qrW, qrH);
+
+             // --- TEXTO DORADO ENCIMA DEL QR ---
+ctx.save();
+ctx.textAlign = "center";
+// Degradado dorado elegante
+let gradient = ctx.createLinearGradient(0, 480, 0, 520);
+gradient.addColorStop(0, "#c8960c"); // Dorado oscuro
+gradient.addColorStop(0.5, "#f5d060"); // Dorado claro
+gradient.addColorStop(1, "#b8860b"); // Dorado medio
+
+ctx.fillStyle = gradient;
+// El 30px es para que quepa bien en el hueco
+ctx.font = "bold 33px Arial, sans-serif"; 
+// Sombra sutil para legibilidad
+ctx.shadowColor = "rgba(0,0,0,0.5)"; 
+ctx.shadowBlur = 3;
+
+// --- DIBUJAR EL TEXTO ---
+// El 505 es la coordenada Y, ajustada para el hueco blanco.
+// El texto aparecerá encima de "Kpstore Kaleth Manuel Perez..."
+ctx.fillText("ten en cuenta que sale a nombre de KPSTORE", canvas.width/2, 365); 
+ctx.restore();
+            // 4. Dibujar la Llave (debajo del QR)
+            const llW = 740;
+            const llH = (llave.height * llW) / llave.width;
+            const llY = qrY + qrH + 3; // Espacio pequeño entre QR y llave
+            ctx.drawImage(llave, (canvas.width - llW)/2, llY, llW, llH);
+
+            // 5. Dibujar la Fecha (en el hueco inferior, debajo del título del fondo)
+            drawValue(ctx, fechaTexto, canvas.width/2, 1450, 100);
+
+            // Generar vista previa
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
+            const preview = document.getElementById("preview");
+            preview.src = dataUrl;
+            preview.style.display = "block";
+
+            const btn = document.getElementById("btn-descargar");
+            btn.href = dataUrl;
+            btn.style.display = "inline-block";
+          };
+        };
+      };
+
+      fondo.onerror = () => console.error("Error cargando recordatorio.JPEG");
+      qr.onerror = () => console.error("Error cargando qr.jpg");
+      llave.onerror = () => console.error("Error cargando llave.jpg");
+    });
+  </script>
+</body>
+</html>

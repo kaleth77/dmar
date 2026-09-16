@@ -124,6 +124,7 @@ header a.volver {
 }
 
 .card h3 {
+    color: #8B3A62 !important;
     padding: 10px;
     font-size: 14px;
     font-weight: 500;
@@ -325,9 +326,11 @@ a:hover {
 }
 
 .card h3 {
+  color: #8B3A62 !important;
   font-size: 16px !important;
   font-weight: 500;
 }
+
 
 /* ===== BADGE OFERTA ===== */
 .badge-oferta {

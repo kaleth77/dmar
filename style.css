@@ -190,7 +190,7 @@ button:hover {
     display: inline-block;
     margin-top: 10px;
     text-decoration: none;
-    color: #BE0155;
+    color: #FF007F !important;
     font-weight: bold;
 }
 

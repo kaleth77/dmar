@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ofertas - KP</title>
+    <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+
+<header>
+    <h1>Ofertas</h1>
+    <a class="volver" href="index.html">⬅ Volver al inicio</a>
+</header>
+
+<section class="productos" id="productos">
+    <p style="color:#9a988f; padding:20px; grid-column:1/-1;">Cargando ofertas...</p>
+</section>
+
+<div id="visor" class="visor">
+  <span onclick="cerrarImagen()">X</span>
+  <img id="imagenGrande">
+</div>
+
+<div id="carrito-icono" onclick="abrirCarrito()">
+  🛒 <span id="contador-carrito">0</span>
+</div>
+
+<div id="modal-carrito">
+  <h3>Tu carrito</h3>
+  <div id="lista-carrito"></div>
+  <div class="carrito-footer">
+    <p><strong>Total: $<span id="total">0</span></strong></p>
+    <button onclick="comprarWhatsApp()">Comprar por WhatsApp</button>
+    <button onclick="cerrarCarrito()">Cerrar</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script src="productos.js"></script>
+<script src="carrito.js?v=3" charset="UTF-8"></script>
+<script>
+  function abrirImagen(img) {
+    document.getElementById("visor").style.display = "flex";
+    document.getElementById("imagenGrande").src = img.src;
+  }
+  function cerrarImagen() {
+    document.getElementById("visor").style.display = "none";
+  }
+
+  function cargarOfertas() {
+    const contenedor = document.getElementById("productos");
+
+    fetch(SHEET_URL)
+      .then(res => res.text())
+      .then(csv => {
+        const todos = parsearCSV(csv);
+
+        const ofertas = todos.filter(p => {
+          const noDisponible = p.noDisponible && p.noDisponible.trim() !== "";
+          const precioNum = parseInt(p.precio);
+          const tieneRebaja = p.precioRebaja
+            && p.precioRebaja.trim() !== ""
+            && !isNaN(parseInt(p.precioRebaja))
+            && parseInt(p.precioRebaja) > 0
+            && parseInt(p.precioRebaja) < precioNum;
+          return p.nombre && p.imagen && tieneRebaja && !noDisponible;
+        });
+
+        if (ofertas.length === 0) {
+          contenedor.innerHTML = "<p style='color:#9a988f; padding:20px; grid-column:1/-1;'>No hay ofertas activas por ahora.</p>";
+          return;
+        }
+
+        contenedor.innerHTML = ofertas.map(crearCard).join("");
+      })
+      .catch(err => {
+        console.error("Error cargando ofertas:", err);
+        contenedor.innerHTML = "<p style='color:#ff6b6b; padding:20px; grid-column:1/-1;'>No se pudieron cargar las ofertas.</p>";
+      });
+  }
+
+  cargarOfertas();
+</script>
+
+</body>
+</html>

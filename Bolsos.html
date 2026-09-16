@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relojes Hombre - KP</title>
+    <meta property="og:description" content="Accesorios y tecnología al mejor precio">
+<meta property="og:image" content="https://kaleth77.github.io/kpreloj/img/hombre.jpg">
+<meta property="og:url" content="https://kaleth77.github.io/kpreloj/otros.html">
+<meta property="og:type" content="website">
+    <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+
+<header>
+    <h1>Relojes Hombre</h1>
+    <a class="volver" href="index.html">⬅ Volver al inicio</a>
+</header>
+
+<section class="productos" id="productos">
+    <!-- Los productos se cargan automáticamente desde Google Sheets -->
+</section>
+
+<div id="visor" class="visor">
+  <span onclick="cerrarImagen()">X</span>
+  <img id="imagenGrande">
+</div>
+
+<div id="carrito-icono" onclick="abrirCarrito()">
+  🛒 <span id="contador-carrito">0</span>
+</div>
+
+<div id="modal-carrito">
+  <h3>Tu carrito</h3>
+  <div id="lista-carrito"></div>
+  <div class="carrito-footer">
+    <p><strong>Total: $<span id="total">0</span></strong></p>
+    <button onclick="comprarWhatsApp()">Comprar por WhatsApp</button>
+    <button onclick="cerrarCarrito()">Cerrar</button>
+  </div>
+</div>
+
+<canvas id="imagenPedido" width="800" height="800" style="display:none;"></canvas>
+
+<script src="script.js"></script>
+<script src="productos.js"></script>
+<script src="carrito.js?v=3" charset="UTF-8"></script>
+<script>
+  cargarProductos("hombre");
+
+  function abrirImagen(img) {
+    document.getElementById("visor").style.display = "flex";
+    document.getElementById("imagenGrande").src = img.src;
+  }
+  function cerrarImagen() {
+    document.getElementById("visor").style.display = "none";
+  }
+</script>
+
+</body>
+</html>

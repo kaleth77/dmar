@@ -1,0 +1,521 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-black: #0b0b0c;
+    --bg-graphite: #1a1a1a;
+    --bg-panel: #141414;
+    --gold: #E5B80B;
+    --gold-dim: rgba(229,184,11,0.4);
+    --gold-soft: rgba(229,184,11,0.08);
+    --text: #f4f2ea;
+    --text-muted: #9a988f;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: linear-gradient(135deg, var(--bg-black), var(--bg-graphite));
+    color: var(--text);
+    text-align: center;
+}
+
+/* ===== HEADER PREMIUM ===== */
+header {
+    background: #111;
+    padding: 26px 20px;
+    border-bottom: 1px solid var(--gold);
+    position: relative;
+}
+
+header h1 {
+    font-family: var(--font-display);
+    color: var(--gold);
+    font-size: 46px;
+    margin: 0;
+    letter-spacing: 6px;
+    font-weight: 600;
+}
+
+header p {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin: 4px 0 0;
+}
+
+header a.volver {
+    display: inline-block;
+    margin-top: 12px;
+}
+
+.btn-ofertas {
+    display: inline-block;
+    margin-top: 16px;
+    background: var(--gold);
+    color: #1a1400 !important;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 10px 22px;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.btn-ofertas:hover {
+    background: white;
+    color: black !important;
+    transform: scale(1.05);
+}
+
+/* ===== GRID PRODUCTOS ===== */
+.productos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Tarjetas de categoria en el index: un poco mas grandes y legibles */
+.productos-categorias {
+    max-width: 1300px;
+    gap: 30px;
+}
+
+.card-categoria h3 {
+    font-size: 17px !important;
+}
+
+/* ===== TARJETAS PREMIUM ===== */
+.card {
+    background: #141414;
+    border: 1px solid rgba(229,184,11,0.4);
+    border-radius: 18px;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(229,184,11,0.3);
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Tarjetas de categoria en el index: la imagen es 1200x1500 (4:5),
+   se respeta esa proporcion para que no se corte el texto de abajo */
+.card-categoria img {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.card h3 {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ===== EFECTO DORADO SUAVE ===== */
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        45deg,
+        rgba(229,184,11,0.15),
+        rgba(229,184,11,0.05)
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
+/* ===== BOTONES PREMIUM ===== */
+button {
+    margin-top: 10px;
+    background: #E5B80B;
+    color: black;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: white;
+    color: black;
+}
+
+/* ===== PRECIO ===== */
+.precio {
+    display: inline-block;
+    background-color: #E5B80B;
+    color: black;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.precio:hover {
+    background-color: white;
+    transform: scale(1.05);
+}
+
+/* ===== LINK VOLVER ===== */
+.volver {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #E5B80B;
+    font-weight: bold;
+}
+
+.volver:hover {
+    text-decoration: underline;
+}
+
+/* ===== VISOR ===== */
+.visor {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.95);
+  justify-content: center;
+  align-items: center;
+}
+
+.visor img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 15px;
+}
+
+.visor span {
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  font-size: 28px;
+  color: #E5B80B;
+  cursor: pointer;
+  background: rgba(0,0,0,0.6);
+  padding: 5px 12px;
+  border-radius: 50%;
+}
+
+/* ===== ICONO CARRITO ===== */
+#carrito-icono{
+  position: fixed !important;
+  top: 20px;
+  right: 20px;
+  z-index: 9999999 !important;
+  background: #141414;
+  padding: 10px 15px;
+  border-radius: 30px;
+  border: 1px solid #E5B80B;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#carrito-icono:hover{
+  background: #E5B80B;
+  color: black;
+}
+
+/* ===== MODAL CARRITO PREMIUM ===== */
+#modal-carrito {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  width: 350px;
+  height: 80vh;
+  background: rgba(20,20,20,0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(229,184,11,0.4);
+  z-index: 9999999;
+  flex-direction: column;
+}
+
+#lista-carrito {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.carrito-footer {
+  border-top: 1px solid rgba(229,184,11,0.3);
+  padding-top: 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+  .productos {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 15px;
+  }
+
+  .card img {
+      height: 150px;
+      aspect-ratio: auto;
+  }
+
+  .card-categoria img {
+      height: auto;
+      aspect-ratio: 4 / 5;
+  }
+
+  .card:hover{
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  #modal-carrito {
+    width: 95%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    height: 85vh;
+  }
+}
+
+/* ===== RESET LINKS (quita morado/azul feo) ===== */
+a {
+  color: white !important;
+  text-decoration: none;
+}
+
+a:visited {
+  color: white !important;
+}
+
+a:hover {
+  color: #E5B80B !important;
+}
+
+.card h3 {
+  font-size: 16px !important;
+  font-weight: 500;
+}
+
+/* ===== BADGE OFERTA ===== */
+.badge-oferta {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #E5B80B;
+  color: #1a1400;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  z-index: 5;
+}
+
+/* ===== PRECIO CON REBAJA ===== */
+.precio-rebaja-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 6px 0;
+}
+
+.precio-original-tachado {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 13px;
+}
+
+.precio-oferta {
+  color: white !important;
+  font-size: 20px !important;
+  font-weight: 700;
+}
+
+/* ===== ACCIONES DE LA CARD (carrito + consultar + comprar) =====
+   2 botones arriba (carrito / consultar) y el de comprar abajo, ancho completo.
+   Se usa grid en vez de flex para que nunca se salgan de la tarjeta. */
+.acciones-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0 10px 12px;
+}
+
+.acciones-card .precio {
+  margin-top: 0;
+  font-size: 12px;
+  padding: 8px 6px;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+}
+
+.btn-consultar {
+  display: inline-block;
+  background: transparent;
+  color: #E5B80B !important;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 6px;
+  border: 1px solid rgba(229,184,11,0.5);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+}
+
+.btn-consultar:hover {
+  background: rgba(229,184,11,0.15);
+  color: #E5B80B !important;
+}
+
+.btn-comprar {
+  display: inline-block;
+  background: #E5B80B;
+  color: #1a1400 !important;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 6px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.btn-comprar:hover {
+  background: white;
+  color: black !important;
+}
+
+/* ===== DESCRIPCIÓN PRODUCTO ===== */
+.descripcion-producto {
+  font-size: 12.5px;
+  color: #bbb;
+  padding: 0 10px;
+  margin: 0 0 4px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.descripcion-corta {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.descripcion-wrap {
+  position: relative;
+}
+
+.desc-toggle-check {
+  display: none;
+}
+
+.desc-ver-mas,
+.desc-ver-menos {
+  display: inline-block;
+  font-size: 12px;
+  color: #E5B80B;
+  cursor: pointer;
+  margin: -2px 0 6px;
+  text-decoration: underline;
+}
+
+.desc-ver-menos {
+  display: none;
+}
+
+.desc-toggle-check:checked ~ .descripcion-wrap .descripcion-producto {
+  -webkit-line-clamp: unset;
+  display: block;
+  overflow: visible;
+}
+
+.desc-toggle-check:checked ~ .descripcion-wrap .desc-ver-mas {
+  display: none;
+}
+
+.desc-toggle-check:checked ~ .descripcion-wrap .desc-ver-menos {
+  display: inline-block;
+}
+/* ===== BADGE NO DISPONIBLE ===== */
+.badge-no-disponible {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #3a3a3a;
+  color: #ff6b6b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  z-index: 5;
+  border: 1px solid rgba(255,107,107,0.4);
+}
+
+/* ===== CARD NO DISPONIBLE (oscurecida) ===== */
+.card-no-disponible img {
+  filter: grayscale(60%) brightness(0.6);
+}
+
+.card-no-disponible:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ===== TEXTO NO DISPONIBLE (donde van los botones) ===== */
+.texto-no-disponible {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  color: #ff6b6b;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,107,107,0.4);
+  border-radius: 8px;
+  background: rgba(255,107,107,0.08);
+}

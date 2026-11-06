@@ -3,7 +3,7 @@
 // ==========================================
 
 // Google Sheets de DMAR
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUxP6_JHi5hOzH0BL5vXZkReWi1OKRRUiNEQ52AvQ_Mt7NqqsBSgbok1C-u520vgIooOv8NaXfGETL/pub?gid=0&single=true&output=csv";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT4De1zXo9Vets5w4E7bU7_en73BDpXIMz6lzhvKWHob_se67l7m7d8hTR8cgvibZg7f9lIJMswdPuy/pub?gid=0&single=true&output=csv";
 
 // Carpeta de imágenes de DMAR
 const BASE_IMG = "https://kaleth77.github.io/dmar/img/";
